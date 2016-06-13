@@ -1,0 +1,164 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <style type="text/css">
+            body {background-color: wheat}
+            p {margin-left: 20px}
+        </style>
+        <title>Sec Al</title>
+    </h:head>
+
+    <h:body>
+        <table  width="1200px" height="600px" border="5">
+            <tr height="50px">
+                <td colspan="3">
+                    <ui:insert name="top">
+                        <h:form>
+                            <h:outputLink rendered="#{not loginBean.isLogin}" value="Login.xhtml" >
+                                Giriş yap
+                            </h:outputLink>
+                            <hr/>
+                            <h:commandButton rendered="#{loginBean.isLogin}" 
+                                             value="Çıkış yap" action="#{loginBean.logout()}">
+                                &nbsp;&nbsp;&nbsp; Hoş Geldin&nbsp;<h:outputText value="** #{loginBean.user.userName} **"/>
+                            </h:commandButton>
+                        </h:form>
+                        <center>
+                            <h:outputLink value="Home.xhtml">
+                                <strong>Anasayfa</strong>
+                            </h:outputLink>
+                        </center>
+                    </ui:insert>
+                </td>
+            </tr>
+            <tr>
+                <td width="20%">
+                    <ui:insert name="left">
+                        <center>
+
+                            <h:outputLink value="Category.xhtml">
+                                Kategoriler
+                            </h:outputLink><br/><br/>
+
+                        </center>
+                    </ui:insert>
+                </td>
+                <td width="40%">
+                    <ui:insert name="content">
+                        <h:form> 
+                            <center>
+                                <h:dataTable value="#{productBean.productList}" var="list" border="1">
+
+                                    <h:column>
+                                        <f:facet name="header">Ürün</f:facet>
+                                        <h:outputLink value="ViewProduct.xhtml">
+                                            <h:outputText value="#{list.productName}"/>
+                                            <f:param name="productId" value="#{list.productId}"/>
+                                        </h:outputLink>
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name="header">Fiyat (&euro;)</f:facet>
+                                        <h:outputText value="#{list.salesPrice}"/>
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name="header">Stok Durumu</f:facet>
+                                        <h:outputText value="#{list.productQuantity} adet bulunmaktadır"/>
+                                    </h:column>
+
+                                    <h:column>
+                                        <h:commandButton value="Sepete at" action="#{cardBean.sepeteEkle()}">
+                                            <f:param name="categoryId" value="#{categoryBean.category.categoryId}"/>
+                                            <f:param name="productId" value="#{list.productId}"/>
+                                        </h:commandButton>
+                                    </h:column>
+                                </h:dataTable>
+                            </center>
+                        </h:form>
+                    </ui:insert>
+                </td>
+                <td width="40%">
+                    <ui:insert name="right">
+                        <h:form rendered="#{cardBean.sepetVarMi}">
+                            <center>
+                                <h:dataTable value="#{cardBean.sepetProductList}" var="list" border="1">
+                                    <h:column>
+                                        <f:facet name="header">Ürün</f:facet>
+                                        <h:outputLink value="ViewProduct.xhtml">
+                                            <h:outputText value="#{list.productName}"/>
+                                            <f:param name="productId" value="#{list.productId}"/>
+                                        </h:outputLink>
+                                    </h:column><br/>
+
+                                    <h:column>
+                                        <f:facet name="header">Fiyat (&euro;)</f:facet>
+                                        <h:outputText value=" #{list.salesPrice}"/>
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name="header">Adet</f:facet>
+                                        <center><h:outputText value="#{list.totalNumber}"/></center>
+                                    </h:column>
+
+                                    <h:column>
+                                        <h:commandButton value="Adet düşür" action="#{cardBean.adetAzalt()}">
+                                            <f:param name="categoryId" value="#{categoryBean.category.categoryId}"/>
+                                            <f:param name="productId" value="#{list.productId}"/>
+                                        </h:commandButton>
+                                    </h:column>
+
+                                    <h:column>
+                                        <h:commandButton value="Sil" action="#{cardBean.sepettenCikar()}">
+                                            <f:param name="categoryId" value="#{categoryBean.category.categoryId}"/>
+                                            <f:param name="productId" value="#{list.productId}"/>
+                                        </h:commandButton>
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name="header">Tutar</f:facet>
+                                        <h:outputText value="#{list.totalCost}"/>
+                                    </h:column>
+                                </h:dataTable>
+                                <br/><br/>
+                            </center>
+
+                            <h5 align="center">
+                                <h:outputText value="Toplam Tutar : #{cardBean.toplamTutar()} &euro;"/>
+                            </h5>
+
+                            <h:commandLink value="Satın Al" action="#{cardBean.goCheckOut()}">
+                                <f:param name="userId" value="#{loginBean.user.userId}"/>
+                            </h:commandLink>
+                            <br/><br/>
+
+                            <h:commandButton value="Sepeti temizle" action="#{cardBean.sepetiTemizle()}">
+                                <f:param name="categoryId" value="#{categoryBean.category.categoryId}"/>
+                            </h:commandButton>
+
+                        </h:form>
+                    </ui:insert>
+                </td>
+            </tr> 
+
+            <tr height="50px">
+                <td>
+                    <ui:insert name="bottom">
+                        <center>
+                            <sub>
+                                Her Hakkı Cloud &nbsp; &reg; 
+                            </sub>
+                        </center>
+                    </ui:insert>
+                </td>
+            </tr>
+        </table>
+    </h:body>
+
+</html>

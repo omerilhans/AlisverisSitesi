@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Ürün Ekleme</title>
+    </h:head>
+    <h:body>
+        <h:form>
+
+            <h:panelGrid columns="2">
+                <h:form> 
+                    <center>
+                        <input type="hidden" name="productId" value="#{productBean.product.productId}"/>
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Ürün ID"/>
+                            <h:outputText value="#{productBean.product.productId}"/>
+                            <h:outputLabel value="Ürün Adı"/>
+                            <h:inputText value="#{productBean.product.productName}"/>
+                            <h:outputLabel value="Ürün Fiyatı"/>
+                            <h:inputText value="#{productBean.product.salesPrice}"/>
+                            <h:outputLabel value="Ürün Stok Miktarı"/>
+                            <h:inputText value="#{productBean.product.productQuantity}"/>
+
+                            <h:selectOneMenu value="#{productBean.selectedCategoryId}">
+                                <f:selectItem itemLabel="Kategori Seçiniz" itemValue="0"/>
+                                <f:selectItems value="#{lifeBean.categoryList}" var="list"
+                                               itemLabel="#{list.categoryName}" 
+                                               itemValue="#{list.categoryId}"/>
+                            </h:selectOneMenu>
+
+                        </h:panelGrid>
+                        <h:commandButton value="Sakla" action="#{productBean.save()}"/>
+                    </center>
+                </h:form>
+            </h:panelGrid>
+
+        </h:form>
+    </h:body>
+</html>
+

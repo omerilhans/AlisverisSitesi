@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./Home.xhtml">
+
+            <ui:define name="content">
+                <h:form>
+                    <center>
+                        <h:messages/>
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Kullanıcı ID : "/>
+                            <h:outputText value="#{userBean.user.userId}"/>
+                            <h:outputLabel value="Kullanıcı Adı : "/>
+                            <h:inputText id="username" value="#{userBean.user.userName}"
+                                         validatorMessage="Adınızın 4-32 arası olmalı !" 
+                                         required="true" requiredMessage="Adınızı girmediniz"/>
+                            <h:message for="username"/>
+                            <h:inputHidden/>
+
+                            <h:outputLabel value="Nickname : "/>
+                            <h:inputText id="nickname" value="#{userBean.user.nickname}"
+                                         validatorMessage="Nickname 4-16 arası olmalı"
+                                         required="true" requiredMessage="Nickname girmediniz"/>
+                            <h:message for="nickname"/>
+                            <h:inputHidden/>
+
+                            <h:outputLabel value="Parola"/>
+                            <h:inputSecret value="#{userBean.user.password}"
+                                           validatorMessage="Parola 4-16 arası olmalı"
+                                           required="true" requiredMessage="Parola girmediniz"/>
+                        </h:panelGrid>
+                        <h:commandButton value="Kayıt Ol" action="#{userBean.save()}"/>
+                    </center>
+                </h:form>
+            </ui:define>
+            
+            <ui:define name="left">
+                
+            </ui:define>
+            <ui:define name="right">
+                
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

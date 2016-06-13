@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./Home.xhtml">
+            <ui:define name="top">
+                <center>
+                    <h:outputLink value="Home.xhtml">
+                        Anasayfa
+                    </h:outputLink>
+                </center>
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form>
+                    <center>
+                        <h:messages/>
+                        <h:panelGrid columns="2"> 
+
+                            <h:outputLabel value="Kullanıcı Adı : "/>
+                            <h:inputText id="nick" value="#{loginBean.user.nickname}"
+                                         required="true" requiredMessage="Nickname girmediniz">
+                            </h:inputText>
+                            <h:message for="nick"/>
+                            <h:inputHidden/>
+
+                            <h:outputLabel value="Parola : "/>
+                            <h:inputSecret id="password" value="#{loginBean.user.password}"
+                                           required="true" requiredMessage="Parola girmediniz"/>
+                            <h:message for="password"/>
+                        </h:panelGrid>
+
+                        <h:commandButton value="Giriş yap" action="#{loginBean.login()}"/>
+                        <br/><br/>
+                        
+                        <h:outputLink value="FindPassword.xhtml">
+                            Şifremi unuttum
+                        </h:outputLink>
+                        <br/><br/>
+
+                        <h:outputLink value="SignUp.xhtml">
+                            Üye ol
+                        </h:outputLink>
+                    </center>
+                </h:form>
+            </ui:define>
+
+            <ui:define name="left">
+
+            </ui:define>
+            <ui:define name="right">
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

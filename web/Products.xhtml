@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./Home.xhtml">
+
+            <ui:define name="left">
+                <center>
+                    <h:outputLink value="Home.xhtml">
+                        Tüm Ürünler
+                    </h:outputLink>
+                    <br/><br/>
+                    <h:outputLink value="Category.xhtml">
+                        &#60; Geri Git
+                    </h:outputLink>
+                </center>
+            </ui:define>    
+
+            <ui:define name="content">
+                <center>
+                    <h:form> 
+                        <h:dataTable value="#{productBean.productList}" var="list" border="1">
+                            
+                                    <h:column>
+                                        <f:facet name="header">Ürün</f:facet>
+                                        <h:outputLink value="ViewProduct.xhtml">
+                                            <h:outputText value="#{list.productName}"/>
+                                            <f:param name="productId" value="#{list.productId}"/>
+                                        </h:outputLink>
+                                    </h:column>
+                                
+                                    <h:column>
+                                        <f:facet name="header">Fiyat (&euro;)</f:facet>
+                                        <h:outputText value=" #{list.salesPrice}"/>
+                                    </h:column>
+                               
+                                    <h:column>
+                                        <f:facet name="header">Stok Durumu</f:facet>
+                                        <h:outputText value="#{list.productQuantity} adet bulunmaktadır"/>
+                                    </h:column>
+                                
+                                    <h:column>
+                                        <h:commandButton value="Sepete at" action="#{cardBean.sepeteEkle()}">
+                                            <f:param name="categoryId" value="#{categoryBean.category.categoryId}"/>
+                                            <f:param name="productId" value="#{list.productId}"/>
+                                        </h:commandButton>
+                                    </h:column>
+                               
+                        </h:dataTable>
+                    </h:form>
+                </center>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
